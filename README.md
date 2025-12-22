@@ -1,11 +1,8 @@
 # Cyphi
 
-**TODO: Add description**
+REST client for CYpher Learning API. Created with [OpenAPI Code Generator](https://github.com/aj-foster/open-api-generator).
 
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `cyphi` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -15,7 +12,27 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/cyphi>.
+## Configuration
 
+You will need to add to your `config/config.exs` file the API endpoint
+and the API KEY:
+
+```elixir
+config :cyphy,
+  api_url: "Cypher Learning API endpoint",
+  api_key: "API KEY VALUE"
+```
+
+## Testing
+
+You can set your test environment with a HTTP test adapter:
+
+```elixir
+config :cyphi,
+  http_adapter: MyApp.TestAdapter
+```
+
+The adaprter should have a public `request/1` function with args
+being a `map()` with `:method` and `url`  keys.
+
+The url, being the REST paths published by Cypher Learning in their API documentation.
