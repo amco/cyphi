@@ -1,0 +1,8 @@
+defmodule Cyphi.HttpAdapter.Req do
+  @behaviour Cyphi.HttpAdapter
+
+  @impl true
+  def send_request(method, url, opts) do
+    apply(Req, method, [url, opts])
+  end
+end
