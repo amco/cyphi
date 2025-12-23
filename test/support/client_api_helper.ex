@@ -1,4 +1,6 @@
 defmodule Cyphi.ClientApiHelper do
+  @moduledoc false
+
   def with_api_url(url, fun) do
     original_url = Application.get_env(:cyphi, :api_url)
     Application.put_env(:cyphi, :api_url, url)

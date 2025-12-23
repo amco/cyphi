@@ -1,4 +1,13 @@
 defmodule Cyphi.Client.Request do
+  @moduledoc """
+  Prepares and encodes HTTP request options for the `Cyphi.Client`.
+
+  This module transforms high-level request maps into adapter-compatible keywords by:
+  * **Injecting Headers:** Adds default JSON content types, `Accept` headers, and the `x-api-key` for authentication.
+  * **Serializing Bodies:** Encodes payloads to JSON, ensuring maps and keyword lists are normalized into ordered objects.
+  * **Mapping Parameters:** Converts query parameters into the expected adapter format.
+  """
+
   @spec encode(map()) :: keyword()
   def encode(request) do
     Keyword.new()
@@ -56,7 +65,7 @@ defmodule Cyphi.Client.Request do
         Keyword.put(req_opts, :body, encoded)
 
       err ->
-        {:error,  "Invalid request body: #{inspect(err)}"}
+        {:error, "Invalid request body: #{inspect(err)}"}
     end
   end
 

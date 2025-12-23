@@ -52,6 +52,7 @@ defmodule Cyphi.User do
           zip: String.t() | nil
         }
 
+  # credo:disable-for-next-line
   defstruct [
     :about,
     :added_by_id,

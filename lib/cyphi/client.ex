@@ -31,11 +31,11 @@ defmodule Cyphi.Client do
   end
 
   defp valid_url?(url) do
-    case URI.parse(url) do
-      %URI{host: host, path: path} ->
-        path == "localhost" ||
-          (is_binary(host) and byte_size(host) > 0)
-
+    with true <- is_binary(url) and byte_size(url) > 0,
+         %URI{host: host, path: path} <- URI.parse(url) do
+      path == "localhost" ||
+        (is_binary(host) and byte_size(host) > 0)
+    else
       _ ->
         false
     end

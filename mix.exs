@@ -8,7 +8,20 @@ defmodule Cyphi.MixProject do
       elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
+      test_coverage: [tool: ExCoveralls],
       deps: deps()
+    ]
+  end
+
+  def cli do
+    [
+      preferred_envs: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test,
+        "coveralls.cobertura": :test
+      ]
     ]
   end
 
@@ -26,10 +39,12 @@ defmodule Cyphi.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~> 0.18", only: :test},
+      {:mix_audit, "~> 2.1", only: [:dev, :test], runtime: false},
+      {:oapi_generator, "~> 0.4", only: :dev, runtime: false},
       {:req, "~> 0.5"},
-      {:oapi_generator, "~> 0.4", only: :dev, runtime: false}
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false}
     ]
   end
 end

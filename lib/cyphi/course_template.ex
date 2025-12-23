@@ -45,6 +45,7 @@ defmodule Cyphi.CourseTemplate do
           weights: String.t() | nil
         }
 
+  # credo:disable-for-next-line
   defstruct [
     :allow_reenrollment,
     :allow_unenrollment,

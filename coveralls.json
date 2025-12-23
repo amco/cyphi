@@ -1,0 +1,6 @@
+{
+  "skip_files": [
+    "lib/cyphi/(?!client)",
+    "lib/cyphi/client/adapter/req.ex"
+  ]
+}

@@ -41,6 +41,7 @@ defmodule Cyphi.Learner do
           user_id: integer
         }
 
+  # credo:disable-for-next-line
   defstruct [
     :completed,
     :completed_at,

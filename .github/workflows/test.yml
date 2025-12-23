@@ -1,0 +1,100 @@
+name: Elixir Testing
+
+# Define workflow that runs when changes are pushed to the
+# `main` branch or pushed to a PR branch that targets the `main`
+# branch. Change the branch name if your project uses a
+# different name for the main branch like "master" or "production".
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+  test:
+    # Sets the ENV `MIX_ENV` to `test` for running tests
+    env:
+      MIX_ENV: test
+      RAILS_ENV: test
+
+    runs-on: ubuntu-22.04
+    name: Test on OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Detect system info
+      uses: kenchan0130/actions-system-info@master
+      id: system-info
+
+    - name: Setup OTP/Elixir
+      uses: erlef/setup-beam@v1
+      id: setup-beam
+      with:
+        version-type: strict
+        version-file: .tool-versions
+
+    - name: Cache Elixir deps and build
+      uses: actions/cache@v4
+      with:
+        path: |
+          deps
+          _build
+        key: "mix-cache-\
+              ${{ steps.system-info.outputs.name }}-\
+              ${{ steps.system-info.outputs.release }}-\
+              ${{ steps.setup-beam.outputs.otp-version }}-\
+              elixir-${{ steps.setup-beam.outputs.elixir-version }}-\
+              mix.lock-${{ hashFiles('**/mix.lock') }}"
+
+    - name: Install Elixir dependencies
+      run: mix deps.get
+
+    - name: Compiles
+      run: mix compile
+
+    - name: Audit Deprecated dependencies
+      run: mix hex.audit
+
+    - name: Audit Elixir dependencies
+      run: mix deps.audit
+
+    - name: Check Formatting
+      run: |
+        mix format --check-formatted
+
+    - name: Analyze code with credo
+      run: mix credo
+
+    - name: Security check with Sobelow
+      run: mix sobelow --config
+
+    - name: Run tests
+      id: test_with_cover
+      run: |
+        mix test --cover 2>&1 | tee test.log
+        result_code=${PIPESTATUS[0]}
+        echo "coverage=$(cat test.log | grep '\[TOTAL\][[:space:]]\+[^%]\+' | sed 's/[^0-9\.]*//g')" >> "${GITHUB_OUTPUT}"
+        exit $result_code
+
+    # Create the directory where badges will be saved, if needed
+    - name: Create destination directory
+      run: mkdir -p doc
+
+    - name: Create or update coverage ishields json
+      run: |
+        result=${{ steps.test_with_cover.outputs.coverage }}
+        if [ "${result%.*}" -lt 90 ]; then color="orange"; else color="green"; fi
+        echo '{"schemaVersion": 1, "label": "Test coverage", "message": "'"${{ steps.test_with_cover.outputs.coverage }}"'%", "color": "'"${color}"'"}' > doc/coverage.json
+
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v4
+      with:
+        name: pr-${{ env.PR_NUMBER }}
+        path: doc
+      env:
+        PR_NUMBER: ${{ github.event.number }}
