@@ -54,6 +54,7 @@ defmodule Cyphi.Course do
           weights: String.t() | nil
         }
 
+  # credo:disable-for-next-line
   defstruct [
     :access_code,
     :allow_reenrollment,

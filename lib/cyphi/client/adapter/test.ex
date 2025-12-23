@@ -1,4 +1,6 @@
 defmodule Cyphi.HttpAdapter.Test do
+  @moduledoc false
+
   @behaviour Cyphi.HttpAdapter
 
   @impl true

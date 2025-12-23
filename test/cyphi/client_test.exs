@@ -110,5 +110,14 @@ defmodule Cyphi.ClientTest do
         end)
       end)
     end
+
+    test "Invalid nil response" do
+      assert_raise RuntimeError,"Missing http response process", fn ->
+        with_response(nil, fn ->
+          opts = %{method: :get, url: "/", response: []}
+          assert {:ok, _resp} = Client.request(opts)
+        end)
+      end
+    end
   end
 end

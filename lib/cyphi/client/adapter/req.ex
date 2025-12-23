@@ -1,4 +1,6 @@
 defmodule Cyphi.HttpAdapter.Req do
+  @moduledoc false
+
   @behaviour Cyphi.HttpAdapter
 
   @impl true

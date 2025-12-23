@@ -94,5 +94,11 @@ defmodule Cyphi.Client.RequestTest do
       assert msg =~ "Invalid request body:"
       assert msg =~ "Jason.Encoder"
     end
+
+    test "normalize simple values body" do
+      request = Request.encode(%{body: 10})
+
+      assert request[:body] == "10"
+    end
   end
 end
