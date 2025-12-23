@@ -65,7 +65,6 @@ jobs:
 
     - name: Check Formatting
       run: |
-        mix format config/runtime.exs
         mix format --check-formatted
 
     - name: Analyze code with credo
