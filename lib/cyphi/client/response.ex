@@ -22,7 +22,6 @@ defmodule Cyphi.Client.Response do
   def decode({:ok, %Req.Response{status: status, body: body}}, %{
         response: response_spec
       }) do
-
     case List.keyfind(response_spec, status, 0) do
       {status, {module, type}} when status in [200, 201] ->
         {:ok, decode_body(body, module, type)}
