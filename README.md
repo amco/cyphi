@@ -1,3 +1,5 @@
+![tests](https://img.shields.io/endpoint?url=https:%2F%2Famco-contentinator.web.app%2Fcoverage.json)
+
 # Cyphi
 
 REST client for CYpher Learning API. Created with [OpenAPI Code Generator](https://github.com/aj-foster/open-api-generator).
