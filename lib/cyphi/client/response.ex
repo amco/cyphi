@@ -22,6 +22,7 @@ defmodule Cyphi.Client.Response do
   def decode({:ok, %Req.Response{status: status, body: body}}, %{
         response: response_spec
       }) do
+
     case List.keyfind(response_spec, status, 0) do
       {status, {module, type}} when status in [200, 201] ->
         {:ok, decode_body(body, module, type)}
@@ -47,6 +48,10 @@ defmodule Cyphi.Client.Response do
 
   defp decode_body(map, module, type) when is_map(map) do
     parse(module, map, type)
+  end
+
+  defp parse(_module, %{"count" => count}, _type) do
+    count
   end
 
   defp parse(module, map, type) do

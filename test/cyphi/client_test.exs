@@ -19,6 +19,18 @@ defmodule Cyphi.ClientTest do
       end)
     end
 
+    test "count list request returns amount" do
+      opts = %{
+        method: :get,
+        url: "/badges",
+        response: [{200, [{Cyphi.Badge, :t}]}]
+      }
+
+      with_response(%{status: 200, body: %{"count" => 10}}, fn ->
+        assert {:ok, 10} == Client.request(opts)
+      end)
+    end
+
     test "single item request returns decoded response (GET)" do
       opts = %{
         method: :get,
