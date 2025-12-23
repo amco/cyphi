@@ -49,6 +49,10 @@ defmodule Cyphi.Client.Response do
     parse(module, map, type)
   end
 
+  defp parse(_module, %{"count" => count}, _type) do
+    count
+  end
+
   defp parse(module, map, type) do
     attrs =
       module.__fields__(type)
