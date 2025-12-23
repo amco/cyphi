@@ -14,6 +14,9 @@ defmodule Cyphi.Client.Response do
       {status, {module, type}} when status in [200, 201] ->
         {:ok, decode_body(body, module, type)}
 
+      {status, [{module, type}]} when status in [200, 201] ->
+        {:ok, decode_body(body, module, type)}
+
       {status, _} when status in [200, 202, 204] ->
         {:ok, body}
 

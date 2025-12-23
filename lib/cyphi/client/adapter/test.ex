@@ -3,6 +3,12 @@ defmodule Cyphi.HttpAdapter.Test do
 
   @impl true
   def send_request(_method, _url, _opts) do
-    {:ok, %Req.Response{status: 200, body: %{}}}
+    case Process.get(:http_response) do
+      nil -> raise "Missing http response process"
+      response when is_map(response) ->
+        {:ok, struct(Req.Response, response)}
+      response ->
+        response
+    end
   end
 end

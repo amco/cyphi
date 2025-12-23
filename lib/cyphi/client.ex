@@ -14,6 +14,7 @@ defmodule Cyphi.Client do
   def request(%{method: method, url: path} = opts) do
     with req_opts <- Request.encode(opts),
          url <- build_url(path),
+         true <- valid_url?(url),
          {:ok, %Req.Response{}} = response <- @adapter.send_request(method, url, req_opts) do
       Response.decode(response, opts)
     else
@@ -22,10 +23,21 @@ defmodule Cyphi.Client do
   end
 
   defp build_url(path) do
-    "#{url()}#{path}"
+    "#{api_base_url()}#{path}"
   end
 
-  defp url do
+  defp api_base_url do
     Application.get_env(:cyphi, :api_url)
+  end
+
+  defp valid_url?(url) do
+    case URI.parse(url) do
+      %URI{host: host, path: path} ->
+        path == "localhost" ||
+          (is_binary(host) and byte_size(host) > 0)
+
+      _ ->
+        false
+    end
   end
 end
