@@ -53,11 +53,11 @@ defmodule Cyphi.Client.Response do
     attrs =
       module.__fields__(type)
       |> Enum.reduce(%{}, fn {field, field_type}, acc ->
-           key = Atom.to_string(field)
-           value = Map.get(map, key)
+        key = Atom.to_string(field)
+        value = Map.get(map, key)
 
-           Map.put(acc, String.to_existing_atom(key), Caster.cast(value, field_type))
-         end)
+        Map.put(acc, String.to_existing_atom(key), Caster.cast(value, field_type))
+      end)
 
     struct(module, attrs)
   end

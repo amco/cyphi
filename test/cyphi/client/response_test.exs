@@ -9,8 +9,7 @@ defmodule Cyphi.Client.ResponseTest do
      req_success: %Req.Response{status: 200, body: %{}},
      req_created: %Req.Response{status: 201, body: %{}},
      req_accepted: %Req.Response{status: 202, body: %{}},
-     req_error: %Req.Response{status: 404, body: "Not Found"}
-    }
+     req_error: %Req.Response{status: 404, body: "Not Found"}}
   end
 
   describe "decode/2 with Adapter Error" do
@@ -56,6 +55,7 @@ defmodule Cyphi.Client.ResponseTest do
         %{"first_name" => "A", "id" => 1},
         %{"first_name" => "B", "id" => 2}
       ]
+
       req = %Req.Response{status: 200, body: body}
       opts = %{response: [{200, [{Cyphi.User, :t}]}]}
 

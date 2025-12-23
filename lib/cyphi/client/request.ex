@@ -65,7 +65,7 @@ defmodule Cyphi.Client.Request do
         Keyword.put(req_opts, :body, encoded)
 
       err ->
-        {:error,  "Invalid request body: #{inspect(err)}"}
+        {:error, "Invalid request body: #{inspect(err)}"}
     end
   end
 

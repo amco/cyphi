@@ -41,8 +41,8 @@ defmodule Cyphi.Client.CasterTest do
     end
 
     test "returns nil for invalid date strings (soft failure)" do
-      assert Caster.cast("not a date" , {:string, "date-time"}) == nil
-      assert Caster.cast("00-01-01 10:22:00" , {:string, "date-time"}) == nil
+      assert Caster.cast("not a date", {:string, "date-time"}) == nil
+      assert Caster.cast("00-01-01 10:22:00", {:string, "date-time"}) == nil
     end
   end
 
