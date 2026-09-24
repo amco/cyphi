@@ -4,7 +4,7 @@ defmodule Cyphi.MixProject do
   def project do
     [
       app: :cyphi,
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.18",
       name: "Cyphi",
       description: "Cypher Learning API 3.0 REST adapter.",
