@@ -7,6 +7,7 @@ config :cyphi,
 if config_env() == :dev do
   config :oapi_generator,
     default: [
+      renderer: Cyphi.Generator.Renderer,
       output: [
         base_module: Cyphi,
         location: "lib/cyphi"

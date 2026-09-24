@@ -66,6 +66,67 @@ defmodule Cyphi.Client.ResponseTest do
     end
   end
 
+  describe "included relationships" do
+    test "preserves included objects and their nested keys as raw maps" do
+      organization = %{"id" => 7, "custom" => %{"active" => true}}
+      body = %{"id" => 1, "organization" => organization, "manager" => %{"id" => 2}}
+      req = %Req.Response{status: 200, body: body}
+
+      assert {:ok, user} = Response.decode({:ok, req}, %{response: [{200, {User, :t}}]})
+      assert user == %User{id: 1, organization: organization, manager: %{"id" => 2}}
+    end
+
+    test "absent and null relationships default to nil" do
+      for body <- [%{"id" => 1}, %{"id" => 1, "organization" => nil}] do
+        req = %Req.Response{status: 200, body: body}
+
+        assert {:ok, %User{organization: nil, manager: nil} = user} =
+                 Response.decode({:ok, req}, %{response: [{200, {User, :t}}]})
+
+        assert user == %User{id: 1}
+      end
+    end
+
+    test "preserves relations in list responses without changing scalar casting" do
+      body = [
+        %{
+          "id" => 1,
+          "user_id" => 2,
+          "user" => %{"id" => 2},
+          "progress" => %{"percent" => 50}
+        },
+        %{"id" => 3}
+      ]
+
+      req = %Req.Response{status: 200, body: body}
+
+      assert {:ok, [first, second]} =
+               Response.decode({:ok, req}, %{response: [{200, [{Cyphi.Learner, :t}]}]})
+
+      assert first == %Cyphi.Learner{
+               id: 1,
+               user_id: 2,
+               user: %{"id" => 2},
+               progress: %{"percent" => 50}
+             }
+
+      assert second == %Cyphi.Learner{id: 3}
+    end
+
+    test "does not change decoding of previously declared nested fields" do
+      metadata = %{"custom" => "value"}
+      organization = %{"id" => 2}
+      body = %{"id" => 1, "metadata" => metadata, "organization" => organization}
+      req = %Req.Response{status: 200, body: body}
+
+      assert {:ok, course} =
+               Response.decode({:ok, req}, %{response: [{200, {Cyphi.Course, :t}}]})
+
+      assert course.metadata == metadata
+      assert course.organization == organization
+    end
+  end
+
   describe "decode/2 with Raw Body (200/202/204)" do
     test "returns raw body for 202 Accepted (async jobs)" do
       req = %Req.Response{status: 202, body: "Job Queued"}

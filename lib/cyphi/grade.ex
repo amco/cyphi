@@ -5,7 +5,9 @@ defmodule Cyphi.Grade do
 
   @type t :: %__MODULE__{
           absent: boolean | nil,
+          assessment: map | nil,
           assessment_id: integer | nil,
+          course: map | nil,
           course_id: String.t() | nil,
           excused: boolean | nil,
           excused_comment: String.t() | nil,
@@ -15,6 +17,7 @@ defmodule Cyphi.Grade do
           grade: String.t() | nil,
           graded: integer | nil,
           graded_at: DateTime.t() | nil,
+          grader: map | nil,
           grader_id: integer | nil,
           id: integer | nil,
           incomplete: boolean | nil,
@@ -28,12 +31,15 @@ defmodule Cyphi.Grade do
           score: number | nil,
           started: boolean | nil,
           started_at: DateTime.t() | nil,
+          user: map | nil,
           user_id: integer | nil
         }
 
   defstruct [
     :absent,
+    :assessment,
     :assessment_id,
+    :course,
     :course_id,
     :excused,
     :excused_comment,
@@ -43,6 +49,7 @@ defmodule Cyphi.Grade do
     :grade,
     :graded,
     :graded_at,
+    :grader,
     :grader_id,
     :id,
     :incomplete,
@@ -56,6 +63,7 @@ defmodule Cyphi.Grade do
     :score,
     :started,
     :started_at,
+    :user,
     :user_id
   ]
 
@@ -66,7 +74,9 @@ defmodule Cyphi.Grade do
   def __fields__(:t) do
     [
       absent: :boolean,
+      assessment: :map,
       assessment_id: :integer,
+      course: :map,
       course_id: :string,
       excused: :boolean,
       excused_comment: :string,
@@ -76,6 +86,7 @@ defmodule Cyphi.Grade do
       grade: :string,
       graded: :integer,
       graded_at: {:string, "date-time"},
+      grader: :map,
       grader_id: :integer,
       id: :integer,
       incomplete: :boolean,
@@ -89,6 +100,7 @@ defmodule Cyphi.Grade do
       score: {:number, "float"},
       started: :boolean,
       started_at: {:string, "date-time"},
+      user: :map,
       user_id: :integer
     ]
   end

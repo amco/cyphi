@@ -12,12 +12,14 @@ defmodule Cyphi.Order do
           id: integer | nil,
           notes: String.t() | nil,
           order_number: String.t() | nil,
+          organization: map | nil,
           organization_id: integer | nil,
           tax_amount: number | nil,
           tax_type: String.t() | nil,
           total: String.t() | nil,
           total_without_bulk_discount: String.t() | nil,
           total_without_tax: String.t() | nil,
+          user: map | nil,
           user_id: integer,
           user_name: String.t() | nil,
           utm_campaign: String.t() | nil,
@@ -26,6 +28,7 @@ defmodule Cyphi.Order do
           utm_source: String.t() | nil,
           utm_term: String.t() | nil,
           verified_at: DateTime.t() | nil,
+          verifier: map | nil,
           verifier_id: integer | nil
         }
 
@@ -38,12 +41,14 @@ defmodule Cyphi.Order do
     :id,
     :notes,
     :order_number,
+    :organization,
     :organization_id,
     :tax_amount,
     :tax_type,
     :total,
     :total_without_bulk_discount,
     :total_without_tax,
+    :user,
     :user_id,
     :user_name,
     :utm_campaign,
@@ -52,6 +57,7 @@ defmodule Cyphi.Order do
     :utm_source,
     :utm_term,
     :verified_at,
+    :verifier,
     :verifier_id
   ]
 
@@ -69,12 +75,14 @@ defmodule Cyphi.Order do
       id: :integer,
       notes: :string,
       order_number: :string,
+      organization: :map,
       organization_id: :integer,
       tax_amount: {:number, "float"},
       tax_type: :string,
       total: :string,
       total_without_bulk_discount: :string,
       total_without_tax: :string,
+      user: :map,
       user_id: :integer,
       user_name: :string,
       utm_campaign: :string,
@@ -83,6 +91,7 @@ defmodule Cyphi.Order do
       utm_source: :string,
       utm_term: :string,
       verified_at: {:string, "date-time"},
+      verifier: :map,
       verifier_id: :integer
     ]
   end

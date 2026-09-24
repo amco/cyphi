@@ -36,7 +36,8 @@ defmodule Cyphi.MixProject do
   end
 
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(:dev), do: ["lib", "codegen"]
+  defp elixirc_paths(:test), do: ["lib", "codegen", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
   # Run "mix help deps" to learn about dependencies.
@@ -46,7 +47,7 @@ defmodule Cyphi.MixProject do
       {:ex_doc, "~> 0.39", only: :dev},
       {:excoveralls, "~> 0.18", only: :test},
       {:mix_audit, "~> 2.1", only: [:dev, :test], runtime: false},
-      {:oapi_generator, "~> 0.4", only: :dev, runtime: false},
+      {:oapi_generator, "~> 0.4", only: [:dev, :test], runtime: false},
       {:req, "~> 0.5"},
       {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false}
     ]

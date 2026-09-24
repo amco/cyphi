@@ -9,9 +9,11 @@ defmodule Cyphi.Answer do
           id: integer | nil,
           points: number | nil,
           position: integer | nil,
+          question: map | nil,
           question_id: integer | nil,
           response: String.t() | nil,
           score: number | nil,
+          user: map | nil,
           user_id: integer | nil
         }
 
@@ -21,9 +23,11 @@ defmodule Cyphi.Answer do
     :id,
     :points,
     :position,
+    :question,
     :question_id,
     :response,
     :score,
+    :user,
     :user_id
   ]
 
@@ -38,9 +42,11 @@ defmodule Cyphi.Answer do
       id: :integer,
       points: {:number, "float"},
       position: :integer,
+      question: :map,
       question_id: :integer,
       response: :string,
       score: {:number, "float"},
+      user: :map,
       user_id: :integer
     ]
   end
