@@ -6,6 +6,7 @@ defmodule Cyphi.Module do
   @type t :: %__MODULE__{
           all_day: boolean | nil,
           begin_at: DateTime.t() | nil,
+          course: map | nil,
           course_id: integer | nil,
           description: String.t() | nil,
           end_at: DateTime.t() | nil,
@@ -27,6 +28,7 @@ defmodule Cyphi.Module do
   defstruct [
     :all_day,
     :begin_at,
+    :course,
     :course_id,
     :description,
     :end_at,
@@ -53,6 +55,7 @@ defmodule Cyphi.Module do
     [
       all_day: :boolean,
       begin_at: {:string, "date-time"},
+      course: :map,
       course_id: :integer,
       description: :string,
       end_at: {:string, "date-time"},

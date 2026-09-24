@@ -4,15 +4,17 @@ defmodule Cyphi.GroupMembership do
   """
 
   @type t :: %__MODULE__{
+          group: map | nil,
           group_id: integer | nil,
           id: integer | nil,
           join_type: String.t() | nil,
           joined_at: DateTime.t() | nil,
           last_visited_at: DateTime.t() | nil,
+          user: map | nil,
           user_id: integer
         }
 
-  defstruct [:group_id, :id, :join_type, :joined_at, :last_visited_at, :user_id]
+  defstruct [:group, :group_id, :id, :join_type, :joined_at, :last_visited_at, :user, :user_id]
 
   @doc false
   @spec __fields__(atom) :: keyword
@@ -20,11 +22,13 @@ defmodule Cyphi.GroupMembership do
 
   def __fields__(:t) do
     [
+      group: :map,
       group_id: :integer,
       id: :integer,
       join_type: :string,
       joined_at: {:string, "date-time"},
       last_visited_at: {:string, "date-time"},
+      user: :map,
       user_id: :integer
     ]
   end

@@ -9,11 +9,12 @@ defmodule Cyphi.Organization do
           id: integer | nil,
           internal: boolean | nil,
           name: String.t() | nil,
+          parent: map | nil,
           parent_id: integer | nil,
           tags: [String.t()] | nil
         }
 
-  defstruct [:custom_fields, :description, :id, :internal, :name, :parent_id, :tags]
+  defstruct [:custom_fields, :description, :id, :internal, :name, :parent, :parent_id, :tags]
 
   @doc false
   @spec __fields__(atom) :: keyword
@@ -26,6 +27,7 @@ defmodule Cyphi.Organization do
       id: :integer,
       internal: :boolean,
       name: :string,
+      parent: :map,
       parent_id: :integer,
       tags: [:string]
     ]

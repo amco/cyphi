@@ -8,10 +8,11 @@ defmodule Cyphi.Session do
           ip_address: String.t() | nil,
           login_at: DateTime.t() | nil,
           logout_at: DateTime.t() | nil,
+          user: map | nil,
           user_id: integer | nil
         }
 
-  defstruct [:id, :ip_address, :login_at, :logout_at, :user_id]
+  defstruct [:id, :ip_address, :login_at, :logout_at, :user, :user_id]
 
   @doc false
   @spec __fields__(atom) :: keyword
@@ -23,6 +24,7 @@ defmodule Cyphi.Session do
       ip_address: :string,
       login_at: {:string, "date-time"},
       logout_at: {:string, "date-time"},
+      user: :map,
       user_id: :integer
     ]
   end

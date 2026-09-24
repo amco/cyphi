@@ -18,6 +18,7 @@ defmodule Cyphi.Batch do
           status: String.t() | nil,
           successful: integer | nil,
           uri: String.t() | nil,
+          user: map | nil,
           user_id: integer
         }
 
@@ -36,6 +37,7 @@ defmodule Cyphi.Batch do
     :status,
     :successful,
     :uri,
+    :user,
     :user_id
   ]
 
@@ -59,6 +61,7 @@ defmodule Cyphi.Batch do
       status: :string,
       successful: :integer,
       uri: :string,
+      user: :map,
       user_id: :integer
     ]
   end
